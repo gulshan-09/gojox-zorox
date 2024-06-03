@@ -12,7 +12,7 @@ const ALLOWED_HOST_GOJO = "gojoo.fun";
 const ALLOWED_HOST_ZORO = "zorox.fun";
 const ALLOWED_HOST_HURAMOVIES = "huramovies.fun";
 const ALLOWED_HOST_STREAMIXZ = "streamixz.com";
-const ALLOWED_HOST_TEST = "localhost:5001";
+const ALLOWED_HOST_TEST = "localhost:3000";
 
 app.use(cors());
 app.use(express.json());
