@@ -8,19 +8,16 @@ const controllers = require("./controllers/dataController");
 
 const PORT = process.env.PORT || "5001";
 const API_KEY = process.env.API_KEY;
-const ALLOWED_HOSTS = [
-  "gojoo.fun",
-  "zorox.fun",
-  "huramovies.fun",
-  "streamixz.com",
-  "localhost:3000"
-];
+const ALLOWED_HOST_GOJO = "gojoo.fun";
+const ALLOWED_HOST_ZORO = "zorox.fun";
+const ALLOWED_HOST_HURAMOVIES = "huramovies.fun";
+const ALLOWED_HOST_STREAMIXZ = "streamixz.com";
 
 app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.status(200).json("I'm live now.😉😎");
+  res.status(200).json("It's working.😉😎");
 });
 
 // Middleware to verify API key and host
@@ -28,6 +25,7 @@ function verifyRequest(req, res, next) {
   const apiKey = req.query.apikey;
 
   const host = req.hostname; 
+  
   const normalizedHost = host.startsWith('www.') ? host.substring(4) : host;
 
   const origin = req.get('Origin');
@@ -40,7 +38,7 @@ function verifyRequest(req, res, next) {
   }
 
   // Check if the request is from the allowed host
-  if (!ALLOWED_HOSTS.includes(normalizedHost) && !ALLOWED_HOSTS.includes(normalizedOriginHost)) {
+  if (normalizedHost !== ALLOWED_HOST_GOJO && normalizedOriginHost !== ALLOWED_HOST_GOJO && normalizedHost !== ALLOWED_HOST_ZORO && normalizedOriginHost !== ALLOWED_HOST_ZORO && normalizedHost !== ALLOWED_HOST_HURAMOVIES && normalizedOriginHost !== ALLOWED_HOST_HURAMOVIES && normalizedHost !== ALLOWED_HOST_STREAMIXZ && normalizedOriginHost !== ALLOWED_HOST_STREAMIXZ) {
     return res.status(403).json({ message: "You are quite clever but not more than me. You can't access my database.😉😎" });
   }
 
