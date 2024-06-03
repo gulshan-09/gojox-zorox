@@ -18,7 +18,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.status(200).json("You are quite clever but not more than me. You can't access my database.😉😎");
+  res.status(200).json("I'm live now.😉😎");
 });
 
 // Middleware to verify API key and host
