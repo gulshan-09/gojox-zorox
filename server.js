@@ -48,6 +48,7 @@ function verifyRequest(req, res, next) {
 
 router.post("/ajax/v2/upload", verifyRequest, controllers.datapost);
 router.get("/ajax/v2/data", verifyRequest, controllers.getData);
+router.get("/ajax/v2/titles", verifyRequest, controllers.getMultipleData);
 router.get("/filter", verifyRequest, controllers.advancedatafilter);
 router.get("/ajax/v2/popular/:id", verifyRequest, controllers.getonedata);
 router.delete("/ajax/v2/delete/:id", verifyRequest, controllers.deletedata);
