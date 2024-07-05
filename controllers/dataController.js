@@ -5,7 +5,7 @@ exports.datapost = async (req, res) => {
         const dataArray = req.body;
 
         if (!Array.isArray(dataArray) || dataArray.length === 0) {
-            return res.status(400).json({ error: "Invalid data format." });
+            return res.status(400).json({ error: "Invalid data format." }); 
         }
 
         const insertedData = await dataJson.insertMany(dataArray, { ordered: false });
@@ -43,6 +43,41 @@ exports.getData = async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
+
+
+// get multitle id data from database 
+
+exports.getMultipleData = async (req, res) => {
+    try {
+        // Extract embed_titles from query parameters
+        const titles = req.query.id;
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+
+        const titleArray = Array.isArray(titles) ? titles : [titles];
+
+        const totalResults = await dataJson.countDocuments({ embed_title: { $in: titleArray } });
+
+        const totalPages = Math.ceil(totalResults / limit);
+
+        const results = await dataJson.find({ embed_title: { $in: titleArray } })
+            .sort({ embed_title: -1 })
+            .skip((page - 1) * limit)
+            .limit(limit)
+            .exec(); 
+
+        res.status(200).json({
+            success: true,
+            totalPages,
+            results,
+        });
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
+
 
 
 // advance filter 
